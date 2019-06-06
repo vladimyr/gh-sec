@@ -79,7 +79,7 @@ async function program([command, repoId], flags) {
   await handler(state, owner, repo, { token });
   console.log(
     kleur.inverse().bold().green(` ${pkg.name} `),
-    handler.desc, kleur.cyan(`${state ? 'en' : 'dis'}abled`)
+    handler.desc, kleur.cyan(state ? 'enabled' : 'disabled')
   );
 }
 

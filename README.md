@@ -23,8 +23,8 @@ Usage:
   $ gh-sec automated-security-fixes [<owner/repo>] (--enable | --disable)
 
 Options:
-  -h, --help            Show help
-  -v, --version         Show version number
+  -h, --help      Show help
+  -v, --version   Show version number
 
 Homepage:     https://github.com/vladimyr/gh-sec
 Report issue: https://github.com/vladimyr/gh-sec/issues
