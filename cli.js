@@ -25,6 +25,9 @@ const commands = {
   autofix: toggleAutomatedSecurityFixes
 };
 
+commands.alert.desc = 'Vulnerability alerts';
+commands.autofix.desc = 'Automated security fixes';
+
 const options = require('minimist-options')({
   help: { type: 'boolean', alias: 'h' },
   version: { type: 'boolean', alias: 'v' },
@@ -62,7 +65,9 @@ async function program([command, repoId], flags) {
   if (flags.version) return console.log(pkg.version);
   if (flags.help) return console.log(help);
   if (!command) {
-    return fail('Error: Command required!');
+    console.error(formatError('Error: Command required!'));
+    console.log(help);
+    process.exit();
   }
   if (!Object.keys(commands).includes(command)) {
     return fail(`Error: Unknown command \`${command}\``);
@@ -71,7 +76,11 @@ async function program([command, repoId], flags) {
   const state = readToggleState(flags);
   const token = readGithubToken();
   const [owner, repo] = await parseRepo(repoId);
-  return handler(state, owner, repo, { token });
+  await handler(state, owner, repo, { token });
+  console.log(
+    kleur.inverse().bold().green(` ${pkg.name} `),
+    handler.desc, kleur.cyan(`${state ? 'en' : 'dis'}abled`)
+  );
 }
 
 function readToggleState(flags) {
